@@ -1,0 +1,62 @@
+﻿<div class="form-group">
+    <label>Page Size</label>
+    <input type="number"
+           style="width: 100px;"
+           ng-model="pagesize" class="form-control" value=""/>
+</div>
+<table id="byArtist"
+       class="table table-bordered bordered table-striped table-condensed datatable">
+    <thead>
+        <tr>
+            <th style="cursor: pointer"
+                ng-repeat="item in config.columns"
+                ng-click="ToggleSort(item.id)">
+                {{item.id}} <span ng-show="sortProp == item.id"
+                                  class="fa"
+                                  ng-class="{'fa-arrow-up' : sortType == 'asc',
+                                                                            'fa-arrow-down' : sortType == 'desc'}"></span>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in data | range:{start:currentpage*pagesize,end:currentpage*pagesize + pagesize}">
+            <td ng-repeat="i in config.columns">
+                <div ng-if="i.type==='date'">
+                    {{getDate(item[i.id])}}
+                </div>
+                <div ng-if="i.type!== 'date'">
+                    {{item[i.id]}}
+                </div>
+            </td>
+            <td class="text-right" style="width: 100px;">
+                <div class="btn-group">
+                    <button class="btn btn-sm btn-default" ng-click="pick(item)"><span class="fa fa-eye-slash"></span></button>
+                    <button class="btn btn-sm btn-danger" ng-click="delete(item)"><span class="fa fa-trash"></span></button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+
+<p>
+    {{pageCount}} / {{pagesize}} - {{currentpage}}
+</p>
+
+<div>
+    <ul class="pagination" ng-show="pageCount < 5">
+        <li ng-repeat="i in range(pageCount) track by $index"><a href="#" ng-click="setpage($index)">{{$index+1}}</a></li>
+    </ul>
+    <ul class="pagination" ng-show="pageCount > 5">
+        <li><a href="#" ng-click="setpage(currentpage-1)"><span class="fa fa-arrow-left"></span>  </a></li>
+        <li><a href="#" ng-click="setpage(currentpage-2)" ng-show="currentpage-2>=0">{{currentpage-2}}</a></li>
+        <li><a href="#" ng-click="setpage(currentpage-1)" ng-show="currentpage-1>=0">{{currentpage-1}}</a></li>
+        <li>
+            <a href="#" ng-click="setpage(currentpage)" style="background-color :#3573ff;color :white;" ng-show="currentpage>-1 && currentpage < pageCount">{{currentpage}}</a>
+        </li>
+        <li><a href="#" ng-click="setpage(currentpage+1)" ng-show="currentpage+1<pageCount">{{currentpage+1}}</a></li>
+        <li><a href="#" ng-click="setpage(currentpage+2)" ng-show="currentpage+2<pageCount">{{currentpage+2}}</a></li>
+        <li><a href="#" ng-click="setpage(currentpage+1)"><span class="fa fa-arrow-right"></span></a></li>
+    </ul>
+</div>
