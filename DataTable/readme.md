@@ -1,4 +1,4 @@
-#Events
+# Events
 
     $scope.$on("picked", (e,item) => {
         console.log(item);
@@ -8,7 +8,7 @@
         console.log(item);
     });
     
- #Config
+ # Config
  
  ```javascript
      $scope.config = {
