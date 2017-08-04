@@ -2,7 +2,7 @@
 
 ## Usage
 
-<div video-js="" sources="sources"></div>
+    <div video-js="" sources="sources"></div>
 
 ```javascript
 
